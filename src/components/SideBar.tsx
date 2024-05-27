@@ -14,7 +14,7 @@ export default function SideBar() {
   return (
     //bg-[#F9F9F9]
     <div
-      className={` ${
+      className={` fixed top-0 h-screen left-0 z-50    ${
         currentTheme === "light"
           ? "bg-[#F9F9F9] border border-r border-gray-200"
           : " bg-[#212124] border-none"

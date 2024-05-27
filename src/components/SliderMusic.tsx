@@ -57,8 +57,8 @@ export default function SliderMusic(props: PropsWithChildren<Props>) {
   const { albumData } = props;
   return (
     <>
-      <div className=" flex  gap-4 w-full ">
-        {albumData.slice(0, 5).map((item, index) => (
+      <div className=" grid grid-cols-4  gap-4 w-full ">
+        {albumData.map((item, index) => (
           <div key={index}>
             <Image
               src={item.coverArt.sources[0].url}
