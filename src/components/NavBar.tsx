@@ -18,7 +18,7 @@ export default function NavBar() {
 
   return (
     <>
-      <div className="flex px-4 pt-2 py-2 items-center justify-between   md:hidden bg-white  ">
+      <div className="flex px-4 pt-2 py-2 items-center justify-between   md:hidden   ">
         <div className="flex items-center gap-2">
           <Image
             src={Logo}

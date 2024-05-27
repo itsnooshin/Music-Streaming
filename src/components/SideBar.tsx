@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { GrHomeRounded } from "react-icons/gr";
 import Link from "next/link";
 import { TbMicrophone2 } from "react-icons/tb";
@@ -8,11 +8,17 @@ import { CgMusic } from "react-icons/cg";
 import { IoSearchOutline, IoSunnyOutline } from "react-icons/io5";
 import Logo from "../../public/assest/Vector.svg";
 import Image from "next/image";
+import { useTheme } from "@/context/ThemeContext";
 export default function SideBar() {
+  const { currentTheme } = useTheme();
   return (
+    //bg-[#F9F9F9]
     <div
-      className=" bg-[#F9F9F9] w-[19%] p-5 "
-      style={{ borderRight: "1px solid   rgb(241 245 249)" }}
+      className={` ${
+        currentTheme === "light"
+          ? "bg-[#F9F9F9] border border-r border-gray-200"
+          : " bg-[#212124] border-none"
+      }  w-[19%] p-5 `}
     >
       <div className="flex items-center gap-2">
         <Image
