@@ -21,8 +21,36 @@ import useFetchAlbums from "@/hooks/useFetchAlbums";
 import { RiCloseLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store";
-import { play, setTrack } from "@/featuers/player/playerSlice";
+import { pause, play, setTrack } from "@/featuers/player/playerSlice";
 export default function NavBar() {
+  interface ProfileSinger {
+    id: number;
+    name: string;
+    picture: string;
+    picture_small: string;
+    picture_medium: string;
+    picture_big: string;
+    picture_xl: string;
+    radio: boolean;
+    tracklist: string;
+    type: string;
+  }
+  interface Inforamtiom {
+    id: number;
+    title: string;
+    title_short: string;
+    title_version: string;
+    link: string;
+    duration: number;
+    rank: number;
+    explicit_lyrics: true;
+    explicit_content_lyrics: number;
+    explicit_content_cover: number;
+    preview: string;
+    md5_image: string;
+    position: number;
+    artist: ProfileSinger;
+  }
   const { albums } = useFetchAlbums();
   const [isOpen, setIsOpen] = useState(false);
   const { toggleTheme } = useTheme();
@@ -36,8 +64,8 @@ export default function NavBar() {
     (state: RootState) => state.player
   );
   console.log(currentTrack);
-  const audioRef = useRef(null);
-  const handlePlay = (item) => {
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const handlePlay = (item: Inforamtiom) => {
     if (audioRef.current) {
       audioRef.current.src = item.preview;
       audioRef.current.play();
@@ -45,11 +73,19 @@ export default function NavBar() {
     dispatch(setTrack(item));
     dispatch(play());
   };
-  useEffect(() => {
-    if (audioRef.current && playing) {
-      audioRef.current.play();
+
+  const handlePause = (item: Inforamtiom) => {
+    if (audioRef.current) {
+      audioRef.current.pause();
     }
-  }, [playing, currentTrack]);
+    dispatch(setTrack(item));
+    dispatch(pause());
+  };
+  // useEffect(() => {
+  //   if (audioRef.current && playing) {
+  //     audioRef.current.play();
+  //   }
+  // }, [playing, currentTrack]);
 
   return (
     <>
@@ -98,7 +134,7 @@ export default function NavBar() {
             <RiCloseLine size={"25px"} />
           </button>
 
-          <div className=" flex items-center flex-col  absolute top-12">
+          <div className=" flex items-center flex-col  absolute top-12 z-40">
             <div className=" flex items-center gap-2">
               <Image
                 src={Logo}
@@ -163,7 +199,7 @@ export default function NavBar() {
         </div>
       </nav>
 
-      <div className="md:hidden min-h-screen relative">
+      <div className="md:hidden min-h-screen ">
         <div className="px-6 mt-5">
           <h2 className="font-bold pb-6">Songs</h2>
           {albums.slice(0, 4).map((item, index: number) => (
@@ -186,13 +222,27 @@ export default function NavBar() {
                 </div>
               </div>
               <div className="flex gap-5">
-                <button onClick={() => handlePlay(item)}>
+                {currentTrack?.id === item.id && playing ? (
+                  <button onClick={() => handlePause(item)}>
+                    <IoPauseOutline size={"20px"} />
+                  </button>
+                ) : (
+                  <button onClick={() => handlePlay(item)}>
+                    {" "}
+                    <IoPlayOutline size={"20px"} />
+                  </button>
+                )}
+
+                {/* <button onClick={() => handlePlay(item)}>
                   {currentTrack?.id === item.id && playing ? (
                     <IoPauseOutline size={"20px"} />
                   ) : (
-                    <IoPlayOutline size={"20px"} />
+                    "p"
                   )}
                 </button>
+                <button>
+                  <IoPlayOutline size={"20px"} />
+                </button> */}
 
                 <button>
                   <GoDownload size={"20px"} />

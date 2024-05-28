@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 interface ArtistInfo {
   id: number;
   name: string;
-  link: string;
   picture: string;
   picture_small: string;
   picture_medium: string;
@@ -16,8 +15,21 @@ interface ArtistInfo {
 interface Album {
   id: number;
   title: string;
+  title_short: string;
+  title_version: string;
+  link: string;
+  duration: number;
+  rank: number;
+  explicit_lyrics: true;
+  explicit_content_lyrics: number;
+  explicit_content_cover: number;
   preview: string;
+  md5_image: string;
+  position: number;
   artist: ArtistInfo;
+  radio: boolean;
+  tracklist: string;
+  type: string;
 }
 interface DataAlbum {
   data: Album[];
